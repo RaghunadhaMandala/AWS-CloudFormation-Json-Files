@@ -185,13 +185,6 @@
                 }]
             }
         },
-        "EC2EIPAssociation" : {
-            "Type" : "AWS::EC2::EIPAssociation",
-            "Properties" : {
-                "EIP" : { "Ref" : "ElasticIp"},
-                "InstanceId" : { "Ref" : "WebInstance"}
-            }
-        },
         "WebInstance": {
             "Type": "AWS::EC2::Instance",
             "DependsOn" : "WebSecurityGroup",
