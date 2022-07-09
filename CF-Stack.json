@@ -246,9 +246,7 @@
                 "Name" : "www.rapahere.tk",
                 "HostedZoneId" : {"Ref" : "MyDomain"},
                 "ResourceRecords" : [
-                {
-                    "Fn::GetAtt" : [ "WebInstance", "PublicIp" ]
-                }
+                    "10.1.1.99"
                 ],
                 "TTL" : "300",
                 "Type" : "A"
