@@ -239,6 +239,7 @@
         },
         "MySQLRDSInstance" : {
             "Type" : "AWS::RDS::DBInstance",
+            "DependsOn" : "RDSSecurityGroup",
             "Properties" : {
                 "AllocatedStorage" : { "Ref" : "DatabaseStorageAllocation"},
                 "DBInstanceClass" : { "Ref" : "DatabaseInstanceClass"},
