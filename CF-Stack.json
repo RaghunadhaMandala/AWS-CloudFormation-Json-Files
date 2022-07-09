@@ -112,7 +112,7 @@
             "Type" : "AWS::EC2::Route",
             "Properties" : {
                "RouteTableId" : { "Ref" : "AppRouteTable" },
-               "DestinationCidrBlock" : "10.1.1.0/24",
+               "DestinationCidrBlock" : "0.0.0.0/0",
                "NatGatewayId" : { "Ref" : "NatGateway" }
             }
         },
@@ -120,7 +120,7 @@
             "Type" : "AWS::EC2::Route",
             "Properties" : {
                "RouteTableId" : { "Ref" : "RDSRouteTable" },
-               "DestinationCidrBlock" : "10.1.2.0/24",
+               "DestinationCidrBlock" : "0.0.0.0/0",
                "NatGatewayId" : { "Ref" : "NatGateway" }
             }
         },
