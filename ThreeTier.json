@@ -185,16 +185,13 @@
             }
         },
         "RDSSecurityGroup" : {
-            "Type" : "AWS::EC2::SecurityGroup",
+            "Type" : "AWS::RDS::DBSecurityGroup",
             "Properties" : {
                 "GroupDescription" : "Allow database traffic (port 3306) from App Tier to RDS Tier",
-                "VpcId" : {"Ref" : "myVPC"},
-                "SecurityGroupIngress" : [
+                "EC2VpcId" : {"Ref" : "myVPC"},
+                "DBSecurityGroupIngress" : [
 				{
-                    "IpProtocol" : "tcp",
-                    "FromPort" : 3306,
-                    "ToPort" : 3306,
-                    "CidrIp" : "10.1.2.0/24"
+                    "EC2SecurityGroupName": { "Ref": "WebSecurityGroup"}
                 }
 				]
             }
