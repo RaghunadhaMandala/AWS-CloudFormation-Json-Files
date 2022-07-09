@@ -188,7 +188,6 @@
             "Type" : "AWS::RDS::DBSecurityGroupIngress",
             "Properties" : {
                 "CIDRIP" : "10.1.2.0/24",
-                "DBSecurityGroupName" : {"Ref": "RDSSecurityGroup"},
                 "EC2SecurityGroupName" : {"Ref": "AppSecurityGroup"}
             }
         },
@@ -244,7 +243,6 @@
         },
         "MySQLRDSInstance" : {
             "Type" : "AWS::RDS::DBInstance",
-            "DependsOn" : "RDSSecurityGroup",
             "Properties" : {
                 "AllocatedStorage" : { "Ref" : "DatabaseStorageAllocation"},
                 "DBInstanceClass" : { "Ref" : "DatabaseInstanceClass"},
