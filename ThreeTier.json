@@ -247,6 +247,25 @@
                 "DBSubnetGroupName" : {"Ref" : "RDSVPCSubnetGroup"},
                 "DBSecurityGroup" : { "Ref" : "RDSSecurityGroup" }
             }
+        },
+        "MyDomain" : {
+            "Type" : "AWS::Route53::HostedZone",
+            "Properties" : {
+                "Name" : "www.rapahere.tk"
+            }
+        },
+        "MyDNSRecords" : {
+            "Type" : "AWS::Route53::RecordSet",
+            "Properties" : {
+                "HostedZoneId" : {"Ref" : "MyDomain"},
+                "ResourceRecords" : [
+                {
+                    "Ref" : "WebInstance"
+                }
+                ],
+                "TTL" : "300",
+                "Type" : "A"
+            }
         }
     },
     "Parameters" : {
