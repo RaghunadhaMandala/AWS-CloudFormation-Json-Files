@@ -247,7 +247,7 @@
                 "MasterUsername" : { "Ref" : "DBAdminUsername"},
                 "MasterUserPassword" : { "Ref" : "DBAdminPassword"},
                 "DBSubnetGroupName" : {"Ref" : "RDSVPCSubnetGroup"},
-                "DBSecurityGroup" : { "Ref" : "RDSSecurityGroup" }
+                "DBSecurityGroups" : [{ "Ref" : "RDSSecurityGroup" }]
             }
         },
         "MyDomain" : {
