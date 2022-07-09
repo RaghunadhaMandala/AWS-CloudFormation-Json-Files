@@ -247,7 +247,7 @@
                 "HostedZoneId" : {"Ref" : "MyDomain"},
                 "ResourceRecords" : [
                 {
-                    "Ref" : "WebInstance"
+                    "Fn::GetAtt" : [ "WebInstance", "PublicIp" ]
                 }
                 ],
                 "TTL" : "300",
