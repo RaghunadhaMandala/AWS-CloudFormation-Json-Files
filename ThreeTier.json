@@ -184,13 +184,6 @@
                 }]
             }
         },
-        "RDSSecurityGroupIngress" : {
-            "Type" : "AWS::RDS::DBSecurityGroupIngress",
-            "Properties" : {
-                "CIDRIP" : "10.1.2.0/24",
-                "EC2SecurityGroupName" : {"Ref": "AppSecurityGroup"}
-            }
-        },
         "RDSSecurityGroup" : {
             "Type" : "AWS::RDS::DBSecurityGroup",
             "Properties" : {
@@ -198,7 +191,7 @@
                 "EC2VpcId" : {"Ref" : "myVPC"},
                 "DBSecurityGroupIngress" : [
 				{
-                    "Ref" : "RDSSecurityGroupIngress"
+                    "EC2SecurityGroupName": { "Ref": "AppSecurityGroup"}
                 }
 				]
             }
