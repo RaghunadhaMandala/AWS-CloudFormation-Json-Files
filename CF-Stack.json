@@ -243,6 +243,7 @@
         "MyDNSRecords" : {
             "Type" : "AWS::Route53::RecordSet",
             "Properties" : {
+                "Name" : "*.rapahere.tk",
                 "HostedZoneId" : {"Ref" : "MyDomain"},
                 "ResourceRecords" : [
                 {
