@@ -26,6 +26,21 @@
                "InternetGatewayId" : { "Ref" : "myInternetGateway" }
              }
         },
+        "ElasticIp": {
+            "DependsOn" : "GatewayToInternet",
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "Domain": "myVPC"
+            }
+        },
+        "NatGateway": {
+            "Type": "AWS::EC2::NatGateway",
+            "DependsOn": "WebSubnet",
+            "Properties": {
+                "AllocationId" : { "Fn::GetAtt" : ["ElasticIp", "AllocationId"]},
+                "SubnetId" : { "Ref" : "WebSubnet"}
+            }
+        },
         "WebSubnet" : {
             "Type" : "AWS::EC2::Subnet",
             "Properties" : {
@@ -94,20 +109,18 @@
         },
         "AppRoute" : {
             "Type" : "AWS::EC2::Route",
-            "DependsOn" : "GatewayToInternet",
             "Properties" : {
                "RouteTableId" : { "Ref" : "AppRouteTable" },
                "DestinationCidrBlock" : "0.0.0.0/0",
-               "GatewayId" : { "Ref" : "myInternetGateway" }
+               "NatGatewayId" : { "Ref" : "NatGateway" }
             }
         },
         "RDSRoute" : {
             "Type" : "AWS::EC2::Route",
-            "DependsOn" : "GatewayToInternet",
             "Properties" : {
                "RouteTableId" : { "Ref" : "RDSRouteTable" },
                "DestinationCidrBlock" : "0.0.0.0/0",
-               "GatewayId" : { "Ref" : "myInternetGateway" }
+               "NatGatewayId" : { "Ref" : "NatGateway" }
             }
         },
         "WebSubnetRouteTableAssociation" : {
