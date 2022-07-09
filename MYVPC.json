@@ -111,7 +111,7 @@
             "Type" : "AWS::EC2::Route",
             "Properties" : {
                "RouteTableId" : { "Ref" : "AppRouteTable" },
-               "DestinationCidrBlock" : "0.0.0.0/0",
+               "DestinationCidrBlock" : "10.1.1.0/24",
                "NatGatewayId" : { "Ref" : "NatGateway" }
             }
         },
@@ -119,7 +119,7 @@
             "Type" : "AWS::EC2::Route",
             "Properties" : {
                "RouteTableId" : { "Ref" : "RDSRouteTable" },
-               "DestinationCidrBlock" : "0.0.0.0/0",
+               "DestinationCidrBlock" : "10.1.2.0/24",
                "NatGatewayId" : { "Ref" : "NatGateway" }
             }
         },
@@ -154,7 +154,7 @@
         "WebSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
-                "GroupDescription": "Allow all traffic to WebTier ",
+                "GroupDescription": "Allow http(port 80) and ssh(port 22) traffic to WebTier ",
                 "VpcId": { "Ref": "myVPC"},
                 "SecurityGroupIngress": [{
                     "IpProtocol": "tcp",
@@ -174,7 +174,7 @@
         "AppSecurityGroup" : {
             "Type" : "AWS::EC2::SecurityGroup",
             "Properties" : {
-                "GroupDescription" : "Allow SSH traffic from Web Tier to App Tier",
+                "GroupDescription" : "Allow SSH (port 22) traffic from Web Tier to App Tier",
                 "VpcId" : {"Ref" : "myVPC"},
                 "SecurityGroupIngress" : [{
                     "IpProtocol" : "tcp",
@@ -187,7 +187,7 @@
         "RDSSecurityGroup" : {
             "Type" : "AWS::EC2::SecurityGroup",
             "Properties" : {
-                "GroupDescription" : "Allow database traffic from App Tier to RDS Tier",
+                "GroupDescription" : "Allow database traffic (port 3306) from App Tier to RDS Tier",
                 "VpcId" : {"Ref" : "myVPC"},
                 "SecurityGroupIngress" : [
 				{
@@ -195,12 +195,6 @@
                     "FromPort" : 3306,
                     "ToPort" : 3306,
                     "CidrIp" : "10.1.2.0/24"
-                },
-				{
-                    "IpProtocol" : "tcp",
-                    "FromPort" : 3306,
-                    "ToPort" : 3306,
-                    "CidrIp" : "10.1.3.0/24"
                 }
 				]
             }
