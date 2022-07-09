@@ -189,7 +189,7 @@
             "Properties" : {
                 "CIDRIP" : "10.1.2.0/24",
                 "DBSecurityGroupName" : {"Ref": "RDSSecurityGroup"},
-                "EC2SecurityGroupName" : {"Ref": "AppSecurityGroup"},
+                "EC2SecurityGroupName" : {"Ref": "AppSecurityGroup"}
             }
         },
         "RDSSecurityGroup" : {
