@@ -47,8 +47,7 @@
             "EngineVersion" : "8.0.28",
             "MasterUsername" : { "Ref" : "DBAdminUsername"},
             "MasterUserPassword" : { "Ref" : "DBAdminPassword"},
-            "DBSubnetGroupName" : {"Ref" : "RDSVPCSubnetGroup"},
-            "VPCSecurityGroups" : ["RDSSecurityGroup"]
+            "DBSubnetGroupName" : {"Ref" : "RDSVPCSubnetGroup"}
         }
       }
     },
