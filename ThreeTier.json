@@ -192,7 +192,7 @@
                 "DBSecurityGroupIngress" : [
 				{
                     "CIDRIP" : "10.1.2.0/24",
-                    "EC2SecurityGroupId": [{ "Ref": "AppSecurityGroup"}],
+                    "EC2SecurityGroupId": [{ "Fn::GetAtt" : [ "AppSecurityGroup ", "EC2SecurityGroupId" ] }],
                     "EC2SecurityGroupName": { "Ref": "AppSecurityGroup"}
                 }
 				]
