@@ -191,7 +191,7 @@
                 "EC2VpcId" : {"Ref" : "myVPC"},
                 "DBSecurityGroupIngress" : [
 				{
-                    "EC2SecurityGroupName": { "Ref": "WebSecurityGroup"}
+                    "EC2SecurityGroupId": { "Fn::GetAtt" : [ "InstanceSecurityGroup", "AppSecurityGroup" ] } 
                 }
 				]
             }
