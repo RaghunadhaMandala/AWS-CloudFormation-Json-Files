@@ -48,7 +48,7 @@
             "MasterUsername" : { "Ref" : "DBAdminUsername"},
             "MasterUserPassword" : { "Ref" : "DBAdminPassword"},
             "DBSubnetGroupName" : {"Ref" : "RDSVPCSubnetGroup"},
-            "DBSecurityGroups" : [{"RDSSecurityGroup"}]
+            "VPCSecurityGroups" : ["RDSSecurityGroup"]
         }
       }
     },
