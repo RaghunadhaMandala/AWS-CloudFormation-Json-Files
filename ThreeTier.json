@@ -207,7 +207,7 @@
               "ImageId": "ami-0cff7528ff583bf9a",
               "InstanceType": "t2.micro",
               "KeyName": "KeyPairNVirginia",
-              "SecurityGroups" : { "Ref" : "WebSecurityGroup"},
+              "SecurityGroups" : [{ "Ref" : "WebSecurityGroup"}],
               "SubnetId" : { "Ref" : "WebSubnet"}
             }
         },
@@ -219,7 +219,7 @@
               "ImageId": "ami-0cff7528ff583bf9a",
               "InstanceType": "t2.micro",
               "KeyName": "KeyPairNVirginia",
-              "SecurityGroups" : { "Ref" : "AppSecurityGroup"},
+              "SecurityGroups" : [{ "Ref" : "AppSecurityGroup"}],
               "SubnetId" : { "Ref" : "AppSubnet"}
             }
         },
