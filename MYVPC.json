@@ -1,0 +1,196 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "Create a VPC and its subnets",
+    "Resources" : {
+        "myVPC" : {
+            "Type" : "AWS::EC2::VPC",
+            "Properties" : {
+               "CidrBlock" : "10.1.0.0/16",
+               "EnableDnsSupport" : "true",
+               "EnableDnsHostnames" : "true",
+               "Tags" : [ 
+                  {"Key" : "stack", "Value" : "development"} 
+               ]
+            }
+        },
+        "myInternetGateway" : {
+            "Type" : "AWS::EC2::InternetGateway",
+            "Properties" : {
+              "Tags" : [ {"Key" : "stack", "Value" : "development"}]
+            }
+        },
+        "GatewayToInternet" : {
+            "Type" : "AWS::EC2::VPCGatewayAttachment",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "InternetGatewayId" : { "Ref" : "myInternetGateway" }
+             }
+        },
+        "WebSubnet" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "CidrBlock" : "10.1.1.0/24",
+               "AvailabilityZone" : "us-east-1a",
+               "Tags" : [ { "Key" : "stack", "Value" : "WebSubnet" } ]
+            }
+        },
+        "AppSubnet" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "CidrBlock" : "10.1.2.0/24",
+               "AvailabilityZone" : "us-east-1b",
+               "Tags" : [ { "Key" : "stack", "Value" : "AppSubnet" } ]
+            }
+        },
+        "RDSSubnet1" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "CidrBlock" : "10.1.3.0/24",
+               "AvailabilityZone" : "us-east-1c",
+               "Tags" : [ { "Key" : "stack", "Value" : "RDSSubnet1" } ]
+            }
+        },
+        "RDSSubnet2" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "CidrBlock" : "10.1.4.0/24",
+               "AvailabilityZone" : "us-east-1d",
+               "Tags" : [ { "Key" : "stack", "Value" : "RDSSubnet2" } ]
+            }
+        },
+        "WebRouteTable" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "Tags" : [ { "Key" : "stack", "Value" : "WebRouteTable" } ]
+            }
+        },
+        "AppRouteTable" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "Tags" : [ { "Key" : "stack", "Value" : "AppRouteTable" } ]
+            }
+        },
+        "RDSRouteTable" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC" },
+               "Tags" : [ { "Key" : "stack", "Value" : "RDSRouteTable" } ]
+            }
+        },
+        "WebRoute" : {
+            "Type" : "AWS::EC2::Route",
+            "DependsOn" : "GatewayToInternet",
+            "Properties" : {
+               "RouteTableId" : { "Ref" : "WebRouteTable" },
+               "DestinationCidrBlock" : "0.0.0.0/0",
+               "GatewayId" : { "Ref" : "myInternetGateway" }
+            }
+        },
+        "AppRoute" : {
+            "Type" : "AWS::EC2::Route",
+            "DependsOn" : "GatewayToInternet",
+            "Properties" : {
+               "RouteTableId" : { "Ref" : "AppRouteTable" },
+               "DestinationCidrBlock" : "0.0.0.0/0",
+               "GatewayId" : { "Ref" : "myInternetGateway" }
+            }
+        },
+        "RDSRoute" : {
+            "Type" : "AWS::EC2::Route",
+            "DependsOn" : "GatewayToInternet",
+            "Properties" : {
+               "RouteTableId" : { "Ref" : "RDSRouteTable" },
+               "DestinationCidrBlock" : "0.0.0.0/0",
+               "GatewayId" : { "Ref" : "myInternetGateway" }
+            }
+        },
+        "WebSubnetRouteTableAssociation" : {
+           "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+           "Properties" : {
+              "SubnetId" : { "Ref" : "WebSubnet" },
+              "RouteTableId" : { "Ref" : "WebRouteTable" }
+            }
+        },
+        "AppSubnetRouteTableAssociation" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+               "SubnetId" : { "Ref" : "AppSubnet" },
+               "RouteTableId" : { "Ref" : "AppRouteTable" }
+             }
+        },
+        "RDSSubnetRouteTableAssociation1" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+               "SubnetId" : { "Ref" : "RDSSubnet1" },
+               "RouteTableId" : { "Ref" : "RDSRouteTable" }
+             }
+        },
+		"RDSSubnetRouteTableAssociation2" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+               "SubnetId" : { "Ref" : "RDSSubnet2" },
+               "RouteTableId" : { "Ref" : "RDSRouteTable" }
+             }
+        },
+        "WebSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow all traffic to WebTier ",
+                "VpcId": { "Ref": "myVPC"},
+                "SecurityGroupIngress": [{
+                    "IpProtocol": "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "CidrIp": "0.0.0.0/0"                    
+                },
+                {
+                    "IpProtocol": "tcp",
+                    "FromPort" : 80,
+                    "ToPort" : 80,
+                    "CidrIp": "0.0.0.0/0"
+                }
+                ]
+            }
+        },
+        "AppSecurityGroup" : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupDescription" : "Allow SSH traffic from Web Tier to App Tier",
+                "VpcId" : {"Ref" : "myVPC"},
+                "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "CidrIp" : "10.1.1.0/24"
+                }]
+            }
+        },
+        "RDSSecurityGroup" : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupDescription" : "Allow database traffic from App Tier to RDS Tier",
+                "VpcId" : {"Ref" : "myVPC"},
+                "SecurityGroupIngress" : [
+				{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 3306,
+                    "ToPort" : 3306,
+                    "CidrIp" : "10.1.2.0/24"
+                },
+				{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 3306,
+                    "ToPort" : 3306,
+                    "CidrIp" : "10.1.3.0/24"
+                }
+				]
+            }
+        } 
+    }
+}
