@@ -199,6 +199,23 @@
                "RouteTableId" : { "Ref" : "RDSRouteTable" }
              }
         },
+        "RDSSecurityGroup" : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupDescription" : "Allow MySQL (port 3306) traffic from App Tier to database instance",
+                "VpcId" : {"Ref" : "myVPC"},
+                "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 3306,
+                    "ToPort" : 3306,
+                    "CidrIp" : "10.1.2.0/24"
+                }],
+                "SecurityGroupEgress" : [{
+                    "IpProtocol" : "-1",
+                    "CidrIp" : "0.0.0.0/0" 
+                }]
+            }
+        },
         "WebInstance": {
             "Type": "AWS::EC2::Instance",
             "DependsOn" : "WebSecurityGroup",
@@ -235,7 +252,8 @@
                 "EngineVersion" : "8.0.28",
                 "MasterUsername" : { "Ref" : "DBAdminUsername"},
                 "MasterUserPassword" : { "Ref" : "DBAdminPassword"},
-                "DBSubnetGroupName" : {"Ref" : "RDSSubnetGroup"}
+                "DBSubnetGroupName" : {"Ref" : "RDSSubnetGroup"},
+                "VPCSecurityGroups" : { "Ref" : "RDSSecurityGroup"}
             }
         },
         "HostedZone" : {
