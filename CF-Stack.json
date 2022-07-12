@@ -232,7 +232,7 @@
                       "\n",
                       [
                         "#!/bin/bash -xe",
-                        "sudo su"
+                        "sudo su",
                         "sudo yum update -y",
                         "sudo yum install httpd -y",
                         "sudo /etc/init.d/httpd start",
