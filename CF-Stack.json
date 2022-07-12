@@ -305,9 +305,9 @@
     "Outputs" : {
         "PublicIp" : {
             "Description" : "Web Instance Public Ip",
-            "Value" : [{
+            "Value" : {
                 "Fn::GetAtt" : [ "WebInstance", "PublicIp" ]
-            }]
+            }
         },
         "HostedZoneId" : {
             "Description" : "The ID of the hosted zone",
