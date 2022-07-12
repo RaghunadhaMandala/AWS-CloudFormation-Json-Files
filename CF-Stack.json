@@ -253,7 +253,7 @@
                 "MasterUsername" : { "Ref" : "DBAdminUsername"},
                 "MasterUserPassword" : { "Ref" : "DBAdminPassword"},
                 "DBSubnetGroupName" : {"Ref" : "RDSSubnetGroup"},
-                "VPCSecurityGroups" : { "Ref" : "RDSSecurityGroup"}
+                "VPCSecurityGroups" : [{ "Ref" : "RDSSecurityGroup"}]
             }
         },
         "HostedZone" : {
