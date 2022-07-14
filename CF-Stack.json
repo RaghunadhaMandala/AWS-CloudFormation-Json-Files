@@ -264,7 +264,7 @@
                 "EngineVersion" : "8.0.28",
                 "MasterUsername" : { "Ref" : "DBAdminUsername"},
                 "MasterUserPassword" : { "Ref" : "DBAdminPassword"},
-                "DeletionProtection" : true;
+                "DeletionProtection" : true,
                 "DBSubnetGroupName" : {"Ref" : "RDSSubnetGroup"},
                 "VPCSecurityGroups" : [{ "Ref" : "RDSSecurityGroup"}]
             }
